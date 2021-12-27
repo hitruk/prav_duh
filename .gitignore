@@ -5,3 +5,6 @@ parser_code/parent.csv
 
 # тестовые примеры(не используются в парсинге)
 parser_code/obj_parser/1.py
+
+# игнорировать директорию library
+library
