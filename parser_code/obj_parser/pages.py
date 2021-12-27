@@ -1,5 +1,4 @@
 
-
 import requests
 from bs4 import BeautifulSoup
 import re 
@@ -53,15 +52,50 @@ class ElementPageParent(ElementPage):
 
 class ElementPageChild(ElementPage):
  
-    def get_clild_element(self):
+    def get_child_element(self):
         """ """
-        abc = self.soup.find('div', class_='')
+        abc = self.soup.find('div', class_='material__attachments').find_all('li')
+        data = []
+        for row in abc:
+            try:
+                title = row.find('span').text
+            except:
+                title = ''
+            try:
+                url = row.find('a').get('href')
+            except:
+                url = ''
+            if title != '' and url != '':
+                data.append(( title, url))
+        return data
 
 class ElementPageGrandchild(ElementPage):
 
     def get_grandchild_element(self):
-        """ """ 
-        abc = self.soup.find('div', class_='')
 
+        try:
+            abc = self.soup.find('div', class_='material__wrapper_short_list').find_all('li')
+        except:
+            try:
+                abc = self.soup.find('div', class_='material__wrapper').find_all('li')
+            except AttributeError:
+                with open("error.txt", "a") as file:
+                    file.write("url address AttributeError: "+url_child)
+                abc = []
 
+        data_grandchild = []
+        for row in abc:
+            # переделать в одно r - строку
+            try:
+                title = row.find('span').text
+            except:
+                title = ''
+            try:
+                url = row.find('a').get('href')
+            except:
+                url = ''
 
+            if title != '' and url != '':
+                data_grandchild.append((title, url))
+
+        return data_grandchild
