@@ -1,7 +1,6 @@
 
 
-from obj_parser.pages import HttpQuery, ElementPageParent, ElementPageChild, ElementPageGrandchild
-
+from obj_parser.pages import HttpQuery, ElementPageParent
 import csv
 import os
 
@@ -33,9 +32,29 @@ def element_parent_page(html):
 def save_data(data_parent):
     """ """
     with open('parent.csv', 'a', newline='') as file:
-        writer= csv.writer(file, delimiter=';')
+        writer= csv.writer(file, delimiter=';') # замена в файле если встретиться разделитель ; заменить на ., c помощью poy
         for row in data_parent:
             writer.writerow(row)
+
+# переделать функцию
+def create_dir():
+    """ """ 
+    path = '../library/'
+    n = 1
+        
+    with open('parent.csv', 'r', newline='') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(n)
+            a = str(n)
+            new_path = path+a
+            if os.path.exists(new_path):
+                print('Директория: ', a, 'уже существует')
+            else:
+                os.mkdir(new_path)
+                with open(new_path+'.txt', 'w', newline='') as file:
+                    file.write(row[0])
+            n += 1            
 
 if __name__ == '__main__':
     
@@ -48,12 +67,13 @@ if __name__ == '__main__':
         'area': 'name'
     }
     # delete parent.csv file
-    delete_csv()
+    #delete_csv()
     # get parent page
-    while(n<=6):
-        print(n)
-        params['page'] = n
-        html = query(url, params)
-        data_parent = element_parent_page(html)
-        save_data(data_parent)
-        n += 1
+    #while(n<=6):
+    #    print(n)
+    #    params['page'] = n
+    #    html = query(url, params)
+    #    data_parent = element_parent_page(html)
+    #    save_data(data_parent)
+    #    n += 1
+    create_dir()   
