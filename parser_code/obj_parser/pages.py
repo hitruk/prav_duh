@@ -19,6 +19,11 @@ class HttpQuery:
             print('Server status code: ', self.req.status_code)
             return
 
+    def get_content_page(self, dir_child):
+        """ """
+        with open(dir_child+'.pdf', "wb") as code:
+            code.write(self.req.content)
+
 class ElementPage:
 
     def __init__(self, html):
