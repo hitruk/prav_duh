@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re 
+import csv
 
 class HttpQuery:
 
@@ -71,7 +72,13 @@ class ElementPageChild(ElementPage):
             except:
                 url = ''
             if title != '' and url != '':
-                data.append(( title, url))
+                # если на дочерней странице вместо ссылок стоит PDF файл
+                # в список data не добавляем
+                pattern = r"\.pdf|\.PDF"
+                if re.search(pattern, url):
+                    pass       
+                else:
+                    data.append((title, url))
         return data
 
 class ElementPageGrandchild(ElementPage):
