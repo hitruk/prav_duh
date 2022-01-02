@@ -1,8 +1,16 @@
 
+
 from obj_parser.pages import HttpQuery, ElementPageChild, ElementPageGrandchild
 import csv
 import os
 import re
+
+def delete_csv_title():
+    """ """
+    if os.path.exists('title/child_title.csv'):
+        os.remove('title/child_title.csv')
+    else:
+        pass
 
 def create_dir_title(path_title):
     """ """
@@ -77,7 +85,7 @@ if __name__ == "__main__":
     path_lib = '../library/'
     path_title = 'title' 
    
-
+    delete_csv_title()
     create_dir_title(path_title)
     data_parents = open_csv(path)
     for data_parent in data_parents:
