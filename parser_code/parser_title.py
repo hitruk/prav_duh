@@ -76,7 +76,8 @@ if __name__ == "__main__":
     path = '../parser_code/parent.csv'
     path_lib = '../library/'
     path_title = 'title' 
-    
+   
+
     create_dir_title(path_title)
     data_parents = open_csv(path)
     for data_parent in data_parents:
