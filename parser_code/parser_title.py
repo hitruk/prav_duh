@@ -24,7 +24,7 @@ def open_csv(path):
     with open(path, 'r', newline="") as file:
         reader = csv.reader(file, delimiter=';')
         data_parents = list(reader)
-        for data_parent in data_parents[0:1]:
+        for data_parent in data_parents:
             print(data_parent)
             yield data_parent 
 
@@ -45,13 +45,15 @@ def element_child_page(html_child):
     #print(data_child)
     return data_child
 
-def save_title_child(path_title, data_child):
+def save_title_child(path_title, data_child, result_child):
     """ """
-    title = data_child[0]
     path = path_title + '/' + 'child_title.csv'
-    with open(path, 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([title])
+    title = data_child[0]
+    if title not in result_child:
+        result_child.append(title)
+        with open(path, 'a', newline='') as file:
+           writer = csv.writer(file)
+           writer.writerow([title])
 
 def query_one(data_child):
     """ """
@@ -83,7 +85,8 @@ if __name__ == "__main__":
     base_url = 'https://pravoslavnoe-duhovenstvo.ru/'
     path = '../parser_code/parent.csv'
     path_lib = '../library/'
-    path_title = 'title' 
+    path_title = 'title'
+    result_title_child = []  # Хранить только уникальные значения title_child   
    
     delete_csv_title()
     create_dir_title(path_title)
@@ -92,7 +95,7 @@ if __name__ == "__main__":
         html_child = query(data_parent)
         data_childs = element_child_page(html_child)
         for data_child in data_childs:
-            save_title_child(path_title, data_child)
+            save_title_child(path_title, data_child, result_title_child)
     #html_grandchild = query_one(data_child)
     #data_grandchild = element_grandchild_page(html_grandchild)
 
